@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHcryption — Clinical Cryptographic Integrity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="brand">
+            <svg class="logo" width="32" height="32" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect width="200" height="200" rx="40" fill="#121318"/>
+                <path d="M60 100C60 77.9086 77.9086 60 100 60C122.091 60 140 77.9086 140 100C140 122.091 122.091 140 100 140" stroke="#00ff41" stroke-width="12" stroke-linecap="round" fill="none"/>
+                <path d="M100 60V40M100 160V140M140 100H160M40 100H60" stroke="#00ff41" stroke-width="8" stroke-linecap="round"/>
+                <circle cx="100" cy="100" r="15" fill="#00ff41"/>
+            </svg>
+            <span class="brand-name">GH<span>cryption</span></span>
+        </div>
+        <nav class="nav-links">
+            <a href="#">How it works</a>
+            <a href="#">Security</a>
+            <a href="#">GitHub</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+        <section class="hero">
+            <h1>Secure Your Data with <span>GHcryption</span></h1>
+            <p>Direct text or file-based encryption. Fast, client-side, and secure. Your keys never leave your browser environment.</p>
+        </section>
+
+        <section class="workstation">
+            
+            <div class="workstation-card input-panel">
+                <div class="panel-header">
+                    <div class="input-source-toggle">
+                        <span class="label-caps">INPUT SOURCE</span>
+                        <div class="toggle-buttons">
+                            <button id="src-text-btn" class="toggle-sub-btn active" onclick="switchInputSource('text')">TEXT</button>
+                            <button id="src-file-btn" class="toggle-sub-btn" onclick="switchInputSource('file')">FILE</button>
+                        </div>
+                    </div>
+                    <button class="text-action-btn" onclick="clearInput()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        CLEAR
+                    </button>
+                </div>
+
+                <div id="input-text-container" class="field-container">
+                    <textarea id="encode-text" placeholder="Paste sensitive data here..."></textarea>
+                </div>
+
+                <div id="input-file-container" class="field-container" style="display: none;">
+                    <div class="file-drop-zone">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #00d1ff;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                        <p>Click or drag file to upload</p>
+                        <input type="file" id="encode-file" onchange="handleFileSelect()">
+                        <div id="file-name-display" class="file-name-spec"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-bridge">
+                <div class="segment-control">
+                    <button id="mode-encrypt" class="segment-btn active" onclick="switchMode('encrypt')">ENCRYPT</button>
+                    <button id="mode-decrypt" class="segment-btn" onclick="switchMode('decrypt')">DECRYPT</button>
+                </div>
+
+                <button id="action-trigger" class="bloom-btn" onclick="handleProcess()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <span>PROCESS SECURELY</span>
+                </button>
+
+                <div id="progress-container" class="progress-wrapper">
+                    <div class="progress-track">
+                        <div id="progress-bar" class="progress-fill"></div>
+                    </div>
+                    <span id="progress-text" class="code-display">Processing: 0%</span>
+                </div>
+            </div>
+
+            <div class="workstation-card output-panel">
+                <div class="panel-header">
+                    <span class="label-caps">SECURE OUTPUT</span>
+                    <button id="copy-btn" class="text-action-btn" onclick="copyToClipboard()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                        <span id="copy-btn-text">COPY</span>
+                    </button>
+                </div>
+
+                <div class="field-container">
+                    <textarea id="output-text" readonly placeholder="Result will appear here..."></textarea>
+                    
+                    <div id="file-download-area" class="file-download-box">
+                        <div class="success-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ff41" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <p id="download-message">File successfully processed!</p>
+                        <a id="download-link" class="download-link-btn" href="#" download>Download File</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-grid">
+            <div class="feature-card">
+                <div class="icon-wrapper green-glow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff41" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <h3>100% Privacy</h3>
+                <p>No data ever reaches our servers. All cryptographic operations are performed locally in your browser environment.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrapper blue-glow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d1ff" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
+                </div>
+                <h3>File Support</h3>
+                <p>Encrypt documents, images, and archives with the same clinical integrity as raw text inputs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrapper dim-glow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b9ccb2" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                </div>
+                <h3>Zero Logs</h3>
+                <p>We do not track, store, or log your inputs. Our architecture ensures your digital footprint remains invisible.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer-bottom">
+        <div class="footer-meta">
+            <strong>GHCRYPTION</strong>
+            <span>© 2026 GHcryption. Clinical cryptographic integrity.</span>
+        </div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Security Audit</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

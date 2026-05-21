@@ -1,0 +1,468 @@
+/* --- DESIGN SYSTEM TOKENS --- */
+:root {
+    --bg-base: #121318;
+    --surface-container: #1e1f25;
+    --surface-container-low: #1a1b21;
+    --surface-glass: rgba(26, 27, 38, 0.6);
+    --on-surface: #e3e1e9;
+    --on-surface-variant: #b9ccb2;
+    --outline: #3b4b37;
+    
+    /* Brand Colors */
+    --primary: #00ff41;           /* Neon Green */
+    --primary-on: #003907;
+    --secondary: #00d1ff;         /* Cyber Blue */
+    --error: #ff3e3e;             /* Warning Red */
+    
+    /* Typography Rules */
+    --font-narrative: 'Inter', sans-serif;
+    --font-data: 'JetBrains Mono', monospace;
+}
+
+/* --- BASE STYLES --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-narrative);
+    background-color: var(--bg-base);
+    color: var(--on-surface);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* --- HEADER & NAVIGATION --- */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 40px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-name {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.brand-name span {
+    color: var(--primary);
+}
+
+.nav-links a {
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 24px;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+/* --- MAIN LAYOUT CONTAINER --- */
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 64px; /* Section gap */
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 56px;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+}
+
+.hero h1 span {
+    color: var(--primary);
+}
+
+.hero p {
+    font-size: 18px;
+    color: var(--on-surface-variant);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 28px;
+}
+
+/* --- WORKSTATION (2-COLUMN GRID) --- */
+.workstation {
+    display: grid;
+    grid-template-columns: 1fr 180px 1fr;
+    gap: 20px;
+    align-items: stretch;
+}
+
+@media (max-width: 900px) {
+    .workstation {
+        grid-template-columns: 1fr;
+    }
+    .control-bridge {
+        flex-direction: row !important;
+        padding: 10px 0;
+    }
+}
+
+/* Glassmorphic Panel Design */
+.workstation-card {
+    background: var(--surface-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px; /* rounded-xl */
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 320px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.label-caps {
+    font-family: var(--font-data);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Sub-toggle buttons (Text/File selector) */
+.input-source-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.toggle-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.toggle-sub-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.3);
+    font-family: var(--font-data);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 2px 4px;
+    transition: color 0.2s;
+}
+
+.toggle-sub-btn.active {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+}
+
+.text-action-btn {
+    background: transparent;
+    border: none;
+    color: var(--on-surface-variant);
+    font-family: var(--font-data);
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.text-action-btn:hover {
+    color: var(--primary);
+}
+
+/* Field Containers & Textareas */
+.field-container {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    width: 100%;
+    flex: 1;
+    background: var(--surface-container-low);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px; /* Standard rounded */
+    padding: 16px;
+    color: var(--on-surface);
+    font-family: var(--font-data);
+    font-size: 14px;
+    line-height: 22px;
+    resize: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 12px rgba(0, 255, 65, 0.15);
+}
+
+/* File Upload UI */
+.file-drop-zone {
+    flex: 1;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    position: relative;
+    background: var(--surface-container-low);
+}
+
+.file-drop-zone input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-drop-zone p {
+    font-size: 14px;
+    color: var(--on-surface-variant);
+}
+
+.file-name-spec {
+    font-family: var(--font-data);
+    font-size: 12px;
+    color: var(--secondary);
+    margin-top: 4px;
+    text-align: center;
+}
+
+/* --- CONTROL BRIDGE (MIDDLE COLUMN) --- */
+.control-bridge {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Segmented Control Toggle (Encrypt/Decrypt) */
+.segment-control {
+    background: var(--surface-container-low);
+    padding: 4px;
+    border-radius: 8px;
+    display: flex;
+    width: 100%;
+}
+
+.segment-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    color: var(--on-surface-variant);
+    font-family: var(--font-data);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.segment-btn.active {
+    background: rgba(255,255,255,0.05);
+    color: var(--primary);
+}
+
+/* Primary Trigger Button with Diffused Bloom Effect */
+.bloom-btn {
+    width: 100%;
+    background: var(--primary);
+    color: var(--primary-on);
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-family: var(--font-narrative);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+}
+
+.bloom-btn:hover {
+    background: #72ff70;
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Processing Progress Bar */
+.progress-wrapper {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.progress-track {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transition: width 0.1s ease;
+}
+
+.progress-wrapper span {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+}
+
+/* --- OUTPUT DOWNLOAD GLASS BOX --- */
+.file-download-box {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 255, 65, 0.02);
+    border: 1px dashed rgba(0, 255, 65, 0.2);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+}
+
+#download-message {
+    font-size: 14px;
+    color: #e3e1e9;
+    margin: 12px 0 16px;
+}
+
+.download-link-btn {
+    background: var(--primary);
+    color: var(--primary-on);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.download-link-btn:hover {
+    background: #72ff70;
+    box-shadow: 0 4px 12px rgba(0, 255, 65, 0.2);
+}
+
+/* --- FEATURE PILLARS --- */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.feature-card {
+    background: var(--surface-container-low);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.green-glow { border: 1px solid rgba(0, 255, 65, 0.15); }
+.blue-glow { border: 1px solid rgba(0, 209, 255, 0.15); }
+.dim-glow { border: 1px solid rgba(185, 204, 178, 0.15); }
+
+.feature-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    font-size: 14px;
+    color: var(--on-surface-variant);
+    line-height: 22px;
+}
+
+/* --- FOOTER SECTIONS --- */
+.app-footer-bottom {
+    max-width: 1200px;
+    width: 100%;
+    margin: 40px auto 0;
+    padding: 24px 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-meta strong {
+    color: var(--on-surface);
+    margin-right: 8px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    margin-left: 16px;
+}
+
+.footer-links a:hover {
+    color: var(--on-surface);
+}
